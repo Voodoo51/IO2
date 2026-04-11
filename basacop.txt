@@ -1,0 +1,128 @@
+CREATE TABLE klasa(
+      id int primary key,
+      nazwa varchar(5)
+);
+
+CREATE TABLE uzytkownik_typ(
+      id int primary key,
+      nazwa varchar(25)
+);
+
+CREATE TABLE uzytkownik(
+      id int primary key,
+      uzytkownik_typ_id int references uzytkownik_typ(id),
+      klasa_id int references klasa(id),
+      login varchar(30),
+      haslo varchar(30),
+      imie varchar(30),
+      nazwisko varchar(30),
+      mail varchar(30) UNIQUE
+);
+
+CREATE TABLE przedmiot(
+      id int primary key,
+      nazwa varchar(25)
+);
+
+CREATE TABLE ocena_opis(
+      id int primary key,
+      opis text
+);
+
+CREATE TABLE ocena(
+      id int primary key,
+      ocena_opis_id int references ocena_opis(id),
+      uczen_id int references uzytkownik(id),
+      nauczyciel_id int references uzytkownik(id),
+      przedmiot_id int references przedmiot(id),
+      wartosc integer,
+      waga integer
+);
+
+CREATE TABLE lekcja(
+      id int primary key,
+      klasa_id int references klasa(id),
+      nauczyciel_id int references uzytkownik(id),
+      przedmiot_id int references przedmiot(id),
+      godzina timestamptz --with date and time
+);
+
+CREATE TABLE obecnosc(
+      uczen_id int references uzytkownik(id),
+      lekcja_id int references lekcja(id),
+      obecnosc boolean,
+      PRIMARY KEY(uczen_id, lekcja_id)
+);
+
+INSERT INTO klasa VALUES
+(0, '1A'),
+(1, '1B'),
+(2, '2A');
+
+INSERT INTO uzytkownik_typ VALUES
+(0, 'Uczen'),
+(1, 'Nauczyciel'),
+(2, 'Opiekun'),
+(3, 'Admin');
+
+INSERT INTO uzytkownik VALUES 
+(0, 1, 1, 'login', 'haslo', 'Katarzyna', 'Stepien', 'mail_test1@gmail.com'),
+(1, 1, 1, 'login', 'haslo', 'Joanna', 'Bombol', 'mail_test2@gmail.com'),
+(2, 1, 1, 'login', 'haslo', 'Maksymilian', 'Sulecki', 'mail_test3@gmail.com'),
+
+(3, 1, 2, 'login', 'haslo', 'Oliwia', 'Pacocha', 'mail_test4@gmail.com'),
+(4, 1, 2, 'login', 'haslo', 'Cezary', 'Bulka', 'mail_test5@gmail.com'),
+
+(5, 1, 3, 'login', 'haslo', 'Szymon', 'Dziadek', 'mail_test6@gmail.com'),
+(6, 1, 3, 'login', 'haslo', 'Szymon', 'Blaszczyk', 'mail_test7@gmail.com'),
+(7, 1, 3, 'login', 'haslo', 'Cezary', 'Bula', 'mail_test8@gmail.com'),
+
+(8, 2, 1, 'login', 'haslo', 'Jozef', 'Ciosmak', 'mail_test9@gmail.com'),
+(9, 2, 3, 'login', 'haslo', 'Marian B.', 'Gorzalczany', 'mail_test10@gmail.com');
+
+INSERT INTO przedmiot VALUES
+('Matematyka'),
+('Angielski'),
+('Polski'),
+('Biologia'),
+('Fizyka');
+
+INSERT INTO ocena_opis VALUES
+(0, 'Ocena 1. Brak dobrze rozwiazanych zadan.'),
+(1, 'Ocena 2. Blad w zadaniu 1, 2 i 3.'),
+(2, 'Ocena 3. Blad w zadaniu 5 i 4.'),
+(3, 'Ocena 4. Blad w zadaniu 4.'),
+(4, 'Ocena 5.');
+
+INSERT INTO ocena VALUES 
+(0, 1, 1, 9, 1, 1, 3),
+(1, 4, 2, 9, 1, 4, 3),
+(2, 4, 3, 9, 1, 4, 3),
+
+(3, 5, 4, 10, 4, 5, 3),
+(4, 5, 5, 10, 4, 5, 3),
+
+(5, 1, 6, 10, 5, 1, 5),
+(6, 2, 7, 10, 5, 2, 5),
+(7, 1, 8, 10, 5, 1, 5);
+
+INSERT INTO lekcja VALUES
+(0, 0, 8, 0, '2026-04-04 12:00:00+00'),
+(1, 1, 9, 4, '2026-04-04 12:00:00+00'),
+(2, 2, 9, 1, '2026-04-04 14:00:00+00');
+
+INSERT INTO obecnosc VALUES
+(0, 0, false),
+(1, 0, true),
+(2, 0, true),
+
+(3, 1, true),
+(4, 1, true),
+
+(5, 2, true),
+(6, 2, true),
+(7, 2, false);
+
+
+
+
