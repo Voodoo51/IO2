@@ -1,0 +1,3 @@
+[submodule "IO2-Frontend"]
+	path = IO2-Frontend
+	url = https://github.com/Voodoo51/IO2-Frontend.git
