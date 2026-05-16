@@ -1,13 +1,21 @@
 package com.IO2.Gradebook.models;
 
-public class Dictionary {
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "przedmiot")
+public class Subject {
+    @Id
     private int id;
+    @Column(name="nazwa")
     private String name;
 
-    public Dictionary(int id, String name) {
+    public Subject(int id, String name) {
         this.id = id;
         this.name = name;
     }
+
+    public Subject() {}
 
     public int getId() {
         return id;

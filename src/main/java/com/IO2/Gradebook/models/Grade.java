@@ -1,20 +1,41 @@
 package com.IO2.Gradebook.models;
 
+import jakarta.persistence.*;
+
+import java.util.Date;
+
+@Entity
+@Table(name = "ocena")
 public class Grade {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int gradeDescId;
-    private int studentId; //is user ID
-    private int teacherId; //is user ID
-    private int subjectNameId;
+    @ManyToOne
+    @JoinColumn(name="uczen_id", nullable = false)
+    private User student;
+    @ManyToOne
+    @JoinColumn(name="nauczyciel_id", nullable = false)
+    private User teacher;
+    @ManyToOne
+    @JoinColumn(name="przedmiot_id", nullable = false)
+    private Subject subject;
+    @Column(name="opis")
+    private String text;
+    @Column(name="data")
+    private Date date;
+    @Column(name="wartosc")
     private int value;
+    @Column(name="waga")
     private int weight;
 
-    public Grade(int id, int gradeDescId, int studentId, int teacherId, int subjectNameId, int value, int weight) {
+    public Grade() {}
+
+    public Grade(int id, User student, User teacher, Subject subject, String text, int value, int weight) {
         this.id = id;
-        this.gradeDescId = gradeDescId;
-        this.studentId = studentId;
-        this.teacherId = teacherId;
-        this.subjectNameId = subjectNameId;
+        this.student = student;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.text = text;
         this.value = value;
         this.weight = weight;
     }
@@ -27,36 +48,44 @@ public class Grade {
         this.id = id;
     }
 
-    public int getGradeDescId() {
-        return gradeDescId;
+    public User getStudent() {
+        return student;
     }
 
-    public void setGradeDescId(int gradeDescId) {
-        this.gradeDescId = gradeDescId;
+    public void setStudent(User student) {
+        this.student = student;
     }
 
-    public int getStudentId() {
-        return studentId;
+    public User getTeacher() {
+        return teacher;
     }
 
-    public void setStudentId(int studentId) {
-        this.studentId = studentId;
+    public void setTeacher(User teacher) {
+        this.teacher = teacher;
     }
 
-    public int getTeacherId() {
-        return teacherId;
+    public Subject getSubject() {
+        return subject;
     }
 
-    public void setTeacherId(int teacherId) {
-        this.teacherId = teacherId;
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
-    public int getSubjectNameId() {
-        return subjectNameId;
+    public String getText() {
+        return text;
     }
 
-    public void setSubjectNameId(int subjectNameId) {
-        this.subjectNameId = subjectNameId;
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public int getValue() {

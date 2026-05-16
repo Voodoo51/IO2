@@ -1,26 +1,3 @@
-CREATE TABLE SPRING_SESSION (
-    PRIMARY_ID CHAR(36) NOT NULL,
-    SESSION_ID CHAR(36) NOT NULL,
-    CREATION_TIME BIGINT NOT NULL,
-    LAST_ACCESS_TIME BIGINT NOT NULL,
-    MAX_INACTIVE_INTERVAL INT NOT NULL,
-    EXPIRY_TIME BIGINT NOT NULL,
-    PRINCIPAL_NAME VARCHAR(100),
-    CONSTRAINT SPRING_SESSION_PK PRIMARY KEY (PRIMARY_ID)
-);
-
-CREATE UNIQUE INDEX SPRING_SESSION_IX1 ON SPRING_SESSION (SESSION_ID);
-CREATE INDEX SPRING_SESSION_IX2 ON SPRING_SESSION (EXPIRY_TIME);
-CREATE INDEX SPRING_SESSION_IX3 ON SPRING_SESSION (PRINCIPAL_NAME);
-
-CREATE TABLE SPRING_SESSION_ATTRIBUTES (
-    SESSION_PRIMARY_ID CHAR(36) NOT NULL,
-    ATTRIBUTE_NAME VARCHAR(200) NOT NULL,
-    ATTRIBUTE_BYTES BYTEA NOT NULL,
-    CONSTRAINT SPRING_SESSION_ATTRIBUTES_PK PRIMARY KEY (SESSION_PRIMARY_ID, ATTRIBUTE_NAME),
-    CONSTRAINT SPRING_SESSION_ATTRIBUTES_FK FOREIGN KEY (SESSION_PRIMARY_ID) REFERENCES SPRING_SESSION(PRIMARY_ID) ON DELETE CASCADE
-);
-
 CREATE TABLE klasa(
       id SERIAL primary key,
       nazwa varchar(5)
@@ -53,10 +30,11 @@ CREATE TABLE ocena_opis(
 
 CREATE TABLE ocena(
       id SERIAL primary key,
-      ocena_opis_id int references ocena_opis(id),
       uczen_id int references uzytkownik(id),
       nauczyciel_id int references uzytkownik(id),
       przedmiot_id int references przedmiot(id),
+      opis text,
+      data date,
       wartosc integer,
       waga integer
 );
@@ -117,16 +95,16 @@ INSERT INTO ocena_opis VALUES
 (4, 'Ocena 5.');
 
 INSERT INTO ocena VALUES 
-(0, 0, 0, 8, 0, 1, 3),
-(1, 3, 1, 8, 0, 4, 3),
-(2, 3, 2, 8, 0, 4, 3),
+(0, 0, 8, 0, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-04', 1, 3),
+(1, 1, 8, 0, 'Ocena 4. Blad w zadaniu 4.', '2026-04-04', 4, 3),
+(2, 2, 8, 0, 'Ocena 4. Blad w zadaniu 4.', '2026-04-04', 4, 3),
 
-(3, 4, 3, 9, 3, 5, 3),
-(4, 4, 4, 9, 3, 5, 3),
+(3, 3, 9, 3, 'Ocena 5.', '2026-04-05', 5, 3),
+(4, 4, 9, 3, 'Ocena 5.', '2026-04-05', 5, 3),
 
-(5, 0, 5, 9, 4, 1, 5),
-(6, 1, 6, 9, 4, 2, 5),
-(7, 0, 7, 9, 4, 1, 5);
+(5, 5, 9, 4, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-06', 1, 5),
+(6, 6, 9, 4, 'Ocena 2. Blad w zadaniu 1, 2 i 3.', '2026-04-06', 2, 5),
+(7, 7, 9, 4, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-06', 1, 5);
 
 INSERT INTO lekcja VALUES
 (0, 0, 8, 0, '2026-04-04 12:00:00+00'),

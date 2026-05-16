@@ -1,13 +1,14 @@
 package com.IO2.Gradebook.controllers;
 
-import com.IO2.Gradebook.models.LoginData;
-import com.IO2.Gradebook.repositories.UserRepository;
-import com.IO2.Gradebook.models.User;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
+import com.IO2.Gradebook.dto.GradeRequest;
+import com.IO2.Gradebook.dto.SubjectGradesDTO;
+import com.IO2.Gradebook.dto.TeacherGradesDTO;
+import com.IO2.Gradebook.dto.UserPublicData;
+import com.IO2.Gradebook.misc.LoginData;
+import com.IO2.Gradebook.services.AuthorizationService;
+import com.IO2.Gradebook.services.GradeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,79 +17,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 public class UserController {
-
-    private final UserRepository userRepository;
-
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable int id) {
-        return userRepository.findById(id);
-    }
-
-    @PostMapping
-    public String createUser(@RequestBody User user) {
-        userRepository.save(user);
-        return "User created";
-    }
+    @Autowired
+    private AuthorizationService authorizationService;
+    @Autowired
+    private GradeService gradeService;
 
     @PostMapping("/login")
-    public User login(HttpSession session, HttpServletResponse response, HttpServletRequest request, @Validated @RequestBody LoginData loginData) {
+    public ResponseEntity<UserPublicData> login(@Validated @RequestBody LoginData loginData) {
+        UserPublicData userPublicData = authorizationService.login(loginData);
 
-        User user = userRepository.getFromSession(session);
-        if(user != null) {
-            if(user.getEmail().equals(loginData.getEmail())) {
-                System.out.println("CASE 1");
-                return user;
-            }
-            else {
-                System.out.println("CASE 2");
-                session.invalidate();
-                session = request.getSession(true);
-            }
-        }
-
-        user = userRepository.tryLogin(loginData.getEmail(), loginData.getPassword());
-        if(user == null) {
-            System.out.println("CASE 4");
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
-            return null;
-        } else {
-            System.out.println("CASE 5");
-            session.setAttribute("id", user.getId());
-            return user;
-        }
+        return ResponseEntity.ok(userPublicData);
     }
 
-    @GetMapping("/info")
-    public User getUserInfo(HttpServletResponse response, HttpServletRequest request) {
-        HttpSession session = request.getSession(false); // ← important
-        User user = userRepository.getFromSession(session);
-        if(user == null) {
-            //response.setStatus(HttpStatus.BAD_REQUEST.value());
-        }
-        return user;
+    @PostMapping("/grades")
+    public ResponseEntity<List<SubjectGradesDTO>> getGrades(@Validated @RequestBody GradeRequest gradeRequest) {
+        List<SubjectGradesDTO> subjectGradesDTO = gradeService.getAllStudentGrades(gradeRequest.getId());
+
+        return ResponseEntity.ok(subjectGradesDTO);
     }
 
-    /*
-    @PutMapping("/{id}")
-    public String updateUser(@PathVariable int id, @RequestBody User user) {
-        user.setId(id);
-        userRepository.update(user);
-        return "User updated";
-    }
-     */
+    @PostMapping("/teacherGrades")
+    public ResponseEntity<List<TeacherGradesDTO>> getTeacherGrades(@Validated @RequestBody GradeRequest gradeRequest) {
+        List<TeacherGradesDTO> teacherGradesDTO = gradeService.getAllTeacherGrades(gradeRequest.getId());
 
-    @DeleteMapping("/{id}")
-    public String deleteUser(@PathVariable int id) {
-        userRepository.deleteById(id);
-        return "User deleted";
+        return ResponseEntity.ok(teacherGradesDTO);
     }
 }
