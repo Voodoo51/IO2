@@ -20,7 +20,7 @@ CREATE TABLE uzytkownik(
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     @OneToOne
     @JoinColumn(name="uzytkownik_typ_id", nullable = false)
     private UserRole role;
@@ -37,7 +37,7 @@ public class User {
 
     public User() {};
 
-    public User(int id, UserRole role, SchoolClass schoolClass, String email, String password, String name, String surname) {
+    public User(Integer id, UserRole role, SchoolClass schoolClass, String email, String password, String name, String surname) {
         this.id = id;
         this.role = role;
         this.schoolClass = schoolClass;
@@ -47,11 +47,11 @@ public class User {
         this.surname = surname;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

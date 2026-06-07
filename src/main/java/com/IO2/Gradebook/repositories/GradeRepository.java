@@ -25,4 +25,23 @@ public interface GradeRepository extends JpaRepository<Grade, Integer> {
     WHERE o.teacher.id = :teacher_id
 """)
     List<Grade> findAllByTeacherId(@Param("teacher_id") Integer teacher_id);
+
+    @Query("""
+    SELECT g
+    FROM Grade g
+    WHERE g.student.schoolClass.id = :class_Id
+""")
+    List<Grade> findAllByStudentClassId(@Param("class_Id") Integer class_Id);
+
+
+    @Query("""
+    SELECT g
+    FROM Grade g
+    WHERE g.teacher.id = :teacherId
+      AND g.student.schoolClass.id = :classId
+""")
+    List<Grade> findAllByTeacherAndClass(
+            @Param("teacherId") Integer teacherId,
+            @Param("classId") Integer classId
+    );
 }
