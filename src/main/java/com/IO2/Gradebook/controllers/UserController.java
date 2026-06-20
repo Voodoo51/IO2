@@ -1,12 +1,10 @@
 package com.IO2.Gradebook.controllers;
 
-import com.IO2.Gradebook.dto.GradeRequest;
-import com.IO2.Gradebook.dto.SubjectGradesDTO;
-import com.IO2.Gradebook.dto.TeacherGradesDTO;
-import com.IO2.Gradebook.dto.UserPublicData;
+import com.IO2.Gradebook.dto.*;
 import com.IO2.Gradebook.misc.LoginData;
 import com.IO2.Gradebook.services.AuthorizationService;
 import com.IO2.Gradebook.services.GradeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -41,5 +39,24 @@ public class UserController {
         List<TeacherGradesDTO> teacherGradesDTO = gradeService.getAllTeacherGrades(gradeRequest.getId());
 
         return ResponseEntity.ok(teacherGradesDTO);
+    }
+
+    @PostMapping("/grade")
+    public ResponseEntity<GradeDTO> addGrade(@Valid @RequestBody AddGradeRequest request) {
+        return ResponseEntity.ok(gradeService.addGrade(request));
+    }//Idk czy tu pelne dto zwracac ale na wszelki wypadek, zawsze mozna zmienic na response
+
+    @DeleteMapping("/grade/{id}")
+    public ResponseEntity<Void> deleteGrade(@PathVariable Integer id) {
+        gradeService.deleteGrade(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/grade/{id}")
+    public ResponseEntity<GradeResponse> updateGrade(
+            @PathVariable Integer id,
+            @RequestBody UpdateGradeRequest request) {
+
+        return ResponseEntity.ok(gradeService.updateGrade(id, request));
     }
 }
