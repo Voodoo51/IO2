@@ -10,9 +10,9 @@ public class AddGradeRequest {
     private Integer weight;
     private String text;
     @NotNull
-    private Long studentId;
+    private Integer studentId;
     @NotNull
-    private Long teacherId;
+    private Integer teacherId;
     @NotNull
     private Integer subjectId;
 
@@ -41,17 +41,17 @@ public class AddGradeRequest {
         this.text = text;
     }
 
-    public Long getStudentId() {
+    public Integer getStudentId() {
         return studentId;
     }
-    public void setStudentId(Long studentId) {
+    public void setStudentId(Integer studentId) {
         this.studentId = studentId;
     }
 
-    public Long getTeacherId() {
+    public Integer getTeacherId() {
         return teacherId;
     }
-    public void setTeacherId(Long teacherId) {
+    public void setTeacherId(Integer teacherId) {
         this.teacherId= teacherId;
     }
 
