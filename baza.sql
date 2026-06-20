@@ -57,7 +57,9 @@ CREATE TABLE obecnosc(
 INSERT INTO klasa VALUES
 (0, '1A'),
 (1, '1B'),
-(2, '2A');
+(2, '2A'),
+(3, '2B'),
+(4, '3A');
 
 INSERT INTO uzytkownik_typ VALUES
 (0, 'Uczen'),
@@ -78,7 +80,21 @@ INSERT INTO uzytkownik VALUES
 (7, 0, 2, 'mail_test8@gmail.com', 'haslo', 'Cezary', 'Bula'),
 
 (8, 1, 0, 'mail_test9@gmail.com', 'haslo', 'Jozef', 'Ciosmak'),
-(9, 1, 2, 'mail_test10@gmail.com', 'haslo', 'Marian B.', 'Gorzalczany');
+(9, 1, 2, 'mail_test10@gmail.com', 'haslo', 'Marian B.', 'Gorzalczany'),
+(10, 1, 1, 'teacher11@gmail.com', 'haslo', 'Anna', 'Nowak'),
+(11, 1, 3, 'teacher12@gmail.com', 'haslo', 'Piotr', 'Kowalski'),
+(12, 0, 3, 'student12@gmail.com', 'haslo', 'Adam', 'Lis'),
+(13, 0, 3, 'student13@gmail.com', 'haslo', 'Julia', 'Kurek'),
+(14, 0, 3, 'student14@gmail.com', 'haslo', 'Natalia', 'Mazur'),
+(15, 0, 3, 'student15@gmail.com', 'haslo', 'Karol', 'Wrona'),
+
+(16, 0, 4, 'student16@gmail.com', 'haslo', 'Patryk', 'Kaczmarek'),
+(17, 0, 4, 'student17@gmail.com', 'haslo', 'Oskar', 'Krupa'),
+(18, 0, 4, 'student18@gmail.com', 'haslo', 'Amelia', 'Baran'),
+(19, 0, 4, 'student19@gmail.com', 'haslo', 'Michal', 'Wilk'),
+
+(20, 0, 4, 'student20@gmail.com', 'haslo', 'Maja', 'Kowalik'),
+(21, 0, 3, 'student21@gmail.com', 'haslo', 'Filip', 'Dudek');
 
 INSERT INTO przedmiot VALUES
 (0, 'Matematyka'),
@@ -104,12 +120,56 @@ INSERT INTO ocena VALUES
 
 (5, 5, 9, 4, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-06', 1, 5),
 (6, 6, 9, 4, 'Ocena 2. Blad w zadaniu 1, 2 i 3.', '2026-04-06', 2, 5),
-(7, 7, 9, 4, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-06', 1, 5);
+(7, 7, 9, 4, 'Ocena 1. Brak dobrze rozwiazanych zadan.', '2026-04-06', 1, 5),
+
+(8, 12, 10, 0, 'Kartkowka', '2026-04-07', 5, 2),
+(9, 13, 10, 0, 'Kartkowka', '2026-04-07', 4, 2),
+(10, 14, 10, 0, 'Kartkowka', '2026-04-07', 3, 2),
+(11, 15, 10, 0, 'Kartkowka', '2026-04-07', 2, 2),
+
+(12, 12, 10, 0, 'Sprawdzian', '2026-04-09', 6, 5),
+(13, 13, 10, 0, 'Sprawdzian', '2026-04-09', 5, 5),
+(14, 14, 10, 0, 'Sprawdzian', '2026-04-09', 4, 5),
+(15, 15, 10, 0, 'Sprawdzian', '2026-04-09', 2, 5),
+
+(16, 21, 10, 0, 'Sprawdzian', '2026-04-09', 1, 5),
+
+(17, 16, 11, 1, 'Vocabulary Test', '2026-04-07', 6, 3),
+(18, 17, 11, 1, 'Vocabulary Test', '2026-04-07', 5, 3),
+(19, 18, 11, 1, 'Vocabulary Test', '2026-04-07', 5, 3),
+(20, 19, 11, 1, 'Vocabulary Test', '2026-04-07', 4, 3),
+(21, 20, 11, 1, 'Vocabulary Test', '2026-04-07', 2, 3),
+
+(22, 16, 11, 1, 'Essay', '2026-04-10', 6, 5),
+(23, 17, 11, 1, 'Essay', '2026-04-10', 5, 5),
+(24, 18, 11, 1, 'Essay', '2026-04-10', 4, 5),
+(25, 19, 11, 1, 'Essay', '2026-04-10', 3, 5),
+(26, 20, 11, 1, 'Essay', '2026-04-10', 1, 5),
+
+(27, 0, 8, 0, 'Kartkowka', '2026-04-11', 2, 1),
+(28, 1, 8, 0, 'Kartkowka', '2026-04-11', 5, 1),
+(29, 2, 8, 0, 'Kartkowka', '2026-04-11', 3, 1),
+
+(30, 5, 9, 4, 'Sprawdzian', '2026-04-11', 1, 5),
+(31, 6, 9, 4, 'Sprawdzian', '2026-04-11', 3, 5),
+(32, 7, 9, 4, 'Sprawdzian', '2026-04-11', 2, 5);
 
 INSERT INTO lekcja VALUES
 (0, 0, 8, 0, '2026-04-04 12:00:00+00'),
 (1, 1, 9, 4, '2026-04-04 12:00:00+00'),
-(2, 2, 9, 1, '2026-04-04 14:00:00+00');
+(2, 2, 9, 1, '2026-04-04 14:00:00+00'),
+
+(3, 3, 10, 0, '2026-04-07 08:00:00+00'),
+(4, 3, 10, 0, '2026-04-08 08:00:00+00'),
+(5, 3, 10, 0, '2026-04-09 08:00:00+00'),
+
+(6, 4, 11, 1, '2026-04-07 10:00:00+00'),
+(7, 4, 11, 1, '2026-04-08 10:00:00+00'),
+(8, 4, 11, 1, '2026-04-09 10:00:00+00'),
+
+(9, 0, 8, 0, '2026-04-10 12:00:00+00'),
+(10, 1, 9, 3, '2026-04-10 12:00:00+00'),
+(11, 2, 9, 4, '2026-04-10 14:00:00+00');
 
 INSERT INTO obecnosc VALUES
 (0, 0, false),
@@ -121,8 +181,43 @@ INSERT INTO obecnosc VALUES
 
 (5, 2, true),
 (6, 2, true),
-(7, 2, false);
+(7, 2, false),
 
+(12, 3, true),
+(13, 3, true),
+(14, 3, true),
+(15, 3, false),
+(21, 3, true),
+
+(12, 4, true),
+(13, 4, true),
+(14, 4, false),
+(15, 4, true),
+(21, 4, false),
+
+(12, 5, true),
+(13, 5, true),
+(14, 5, true),
+(15, 5, true),
+(21, 5, true),
+
+(16, 6, true),
+(17, 6, true),
+(18, 6, false),
+(19, 6, true),
+(20, 6, false),
+
+(16, 7, true),
+(17, 7, true),
+(18, 7, true),
+(19, 7, true),
+(20, 7, true),
+
+(16, 8, true),
+(17, 8, false),
+(18, 8, true),
+(19, 8, true),
+(20, 8, true);
 
 
 
