@@ -71,6 +71,8 @@ public class GradeService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Grade not found"));
 
         grade.setValue(request.getGradeValue());
+        grade.setWeight(request.getGradeWeight());
+        grade.setText(request.getGradeText());
 
         Grade saved = gradeRepository.save(grade);
         return new GradeResponse(saved);
