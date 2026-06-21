@@ -60,8 +60,8 @@ public class UserController {
             @RequestBody UpdateGradeRequest request) {
         System.out.println("UPDATE ______________________________");
         System.out.println(request.getGradeValue());
-        System.out.println(request.getWeight());
-        System.out.println(request.getText());
+        System.out.println(request.getGradeWeight());
+        System.out.println(request.getGradeText());
 
         return ResponseEntity.ok(gradeService.updateGrade(id, request));
     }
