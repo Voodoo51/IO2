@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.Console;
 import java.util.List;
 
 @RestController
@@ -48,6 +49,7 @@ public class UserController {
 
     @DeleteMapping("/grade/{id}")
     public ResponseEntity<Void> deleteGrade(@PathVariable Integer id) {
+        System.err.println("DELETE________________________________");
         gradeService.deleteGrade(id);
         return ResponseEntity.noContent().build();
     }
@@ -56,6 +58,10 @@ public class UserController {
     public ResponseEntity<GradeResponse> updateGrade(
             @PathVariable Integer id,
             @RequestBody UpdateGradeRequest request) {
+        System.out.println("UPDATE ______________________________");
+        System.out.println(request.getGradeValue());
+        System.out.println(request.getWeight());
+        System.out.println(request.getText());
 
         return ResponseEntity.ok(gradeService.updateGrade(id, request));
     }
