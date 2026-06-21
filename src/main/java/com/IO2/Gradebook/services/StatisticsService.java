@@ -31,8 +31,7 @@ public class StatisticsService {
     private TopStudentsStrategy topStudentsStrategy;
     @Autowired
     private WeakestStudentsStrategy weakestStudentsStrategy;
-    @Autowired
-    private ClassStatisticsFactory classStatisticsFactory;
+    private final ClassStatisticsFactory classStatisticsFactory = new ClassStatisticsFactory();
 
     public StudentStatisticsDTO getStudentStatistics(Integer studentId) {
 
