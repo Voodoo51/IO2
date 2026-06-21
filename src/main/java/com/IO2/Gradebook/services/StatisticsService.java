@@ -1,5 +1,6 @@
 package com.IO2.Gradebook.services;
 
+import com.IO2.Gradebook.components.ClassStatisticsFactory;
 import com.IO2.Gradebook.components.TopStudentsStrategy;
 import com.IO2.Gradebook.components.WeakestStudentsStrategy;
 import com.IO2.Gradebook.dto.*;
@@ -30,6 +31,8 @@ public class StatisticsService {
     private TopStudentsStrategy topStudentsStrategy;
     @Autowired
     private WeakestStudentsStrategy weakestStudentsStrategy;
+    @Autowired
+    private ClassStatisticsFactory classStatisticsFactory;
 
     public StudentStatisticsDTO getStudentStatistics(Integer studentId) {
 
@@ -111,8 +114,16 @@ public class StatisticsService {
         List<Attendance> attendances = attendanceRepository.findAllByClassId(classId);
         List<User> students = userRepository.findStudentsByClassId(classId);
 
-        ClassStatisticsDTO dto = new ClassStatisticsDTO();
+        return classStatisticsFactory.create(
+                classId,
+                students,
+                grades,
+                attendances,
+                topStudentsStrategy.calculate(students),
+                weakestStudentsStrategy.calculate(students)
+        );
 
+        /*
         dto.setClassId(classId);
 
         if (!students.isEmpty()) {
@@ -161,32 +172,6 @@ public class StatisticsService {
 
         dto.setGradeDistribution(gradeDistribution);
 
-        /*
-        List<StudentRankingDTO> ranking =
-                students.stream()
-                        .map(student -> {
-
-                            List<Grade> studentGrades = gradeRepository.findAllByStudentId(student.getId());
-
-                            double average = studentGrades.stream()
-                                            .mapToInt(Grade::getValue)
-                                            .average()
-                                            .orElse(0);
-
-                            return new StudentRankingDTO(student.getId(), student.getName(),student.getSurname(), average);
-                        })
-                        .sorted(Comparator.comparing(StudentRankingDTO::getAverage).reversed())
-                        .toList();
-
-        dto.setTopStudents(ranking.stream().limit(3).toList());
-
-        dto.setWeakestStudents(
-                ranking.stream()
-                        .sorted(Comparator.comparing(StudentRankingDTO::getAverage))
-                        .limit(3)
-                        .toList()
-        );
-*/
         String className = students.get(0).getSchoolClass().getName();
 
         return ClassStatisticsDTO.builder()
@@ -200,6 +185,8 @@ public class StatisticsService {
                 .topStudents(topStudentsStrategy.calculate(students))
                 .weakestStudents(weakestStudentsStrategy.calculate(students))
                 .build();
+
+         */
     }
 
     public List<TeacherClassDTO> getTeacherClasses(Integer teacherId) {
